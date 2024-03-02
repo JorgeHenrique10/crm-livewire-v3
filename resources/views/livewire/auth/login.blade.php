@@ -17,6 +17,10 @@
         <x-form wire:submit="tryToLogin" class="p-6 border-4 rounded-md border-blue-950">
             <x-input label="E-mail" wire:model="email" />
             <x-input label="Senha" wire:model="password" type='password' />
+            <div class="flex justify-end w-full text-xs ">
+                <a wire:navigation href="{{ route('auth.password.recovery') }}" class="link link-primary">Forgout your
+                    password? </a>
+            </div>
 
             <x-slot:actions class="flex flex-row">
                 <div class="flex items-center w-full pl-0 ml-0">

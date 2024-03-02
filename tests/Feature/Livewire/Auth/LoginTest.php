@@ -6,7 +6,7 @@ use Livewire\Livewire;
 
 it('renders successfully', function () {
     Livewire::test(Login::class)
-        ->assertStatus(200);
+        ->assertSeeLivewire('auth.password.recovery');
 });
 
 it('should be able to login', function () {
