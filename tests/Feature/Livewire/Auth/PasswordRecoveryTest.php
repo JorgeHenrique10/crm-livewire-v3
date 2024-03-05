@@ -6,7 +6,7 @@ use App\Notifications\PasswordRecoveryNotification;
 use Illuminate\Support\Facades\Notification;
 use Livewire\Livewire;
 
-use function Pest\Laravel\get;
+use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas, get};
 
 test('needs to have a route to password recovery', function () {
     get(route('auth.password.recovery'))
@@ -35,3 +35,15 @@ test('email property', function ($value, $rule) {
     'required' => ['value' => '', 'rule' => 'required'],
     'email'    => ['value' => 'any email', 'rule' => 'email'],
 ]);
+
+test('needs send token to password recovery', function () {
+
+    $user = User::factory()->create();
+
+    Livewire::test(Recovery::class)
+        ->set('email', $user->email)
+        ->call('startPasswordRecovery');
+
+    assertDatabaseCount('password_reset_tokens', 1);
+    assertDatabaseHas('password_reset_tokens', ['email' => $user->email]);
+});

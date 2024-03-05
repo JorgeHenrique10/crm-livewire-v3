@@ -11,12 +11,11 @@
 
         <x-form wire:submit="startPasswordRecovery" class="p-6 border-4 rounded-md border-blue-950">
             <x-input label="E-mail" wire:model="email" />
-
+            <div class="flex flex-col w-full text-xs text-end">
+                <a wire:navigation href="{{ route('login') }}" class="link link-primary">Never mind, get back
+                    to login page.</a>
+            </div>
             <x-slot:actions class="flex flex-row">
-                <div class="flex items-center w-full pl-0 ml-0">
-                    <a wire:navigation href="{{ route('login') }}" class="link link-primary">Never mind, get back to
-                        login page</a>
-                </div>
                 <div>
                     {{-- <x-button label="Reset" /> --}}
                     <x-button label="Submit" class="btn-primary" type="submit" spinner="save" />

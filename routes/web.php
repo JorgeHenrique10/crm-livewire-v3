@@ -22,6 +22,7 @@ Route::get('/logout', function () {
     Auth::logout();
 })->name('auth.logout');
 Route::get('/password/recovery', Recovery::class)->name('auth.password.recovery');
+Route::get('/password/reset', fn () => 'oi')->name('password.reset');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', Welcome::class)->name('dashboard');
