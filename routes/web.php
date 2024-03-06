@@ -1,6 +1,6 @@
 <?php
 
-use App\Livewire\Auth\Password\Recovery;
+use App\Livewire\Auth\Password\{Recovery, Reset};
 use App\Livewire\Auth\{Login, Register};
 use App\Livewire\Welcome;
 use Illuminate\Support\Facades\{Auth, Route};
@@ -22,7 +22,7 @@ Route::get('/logout', function () {
     Auth::logout();
 })->name('auth.logout');
 Route::get('/password/recovery', Recovery::class)->name('auth.password.recovery');
-Route::get('/password/reset', fn () => 'oi')->name('password.reset');
+Route::get('/password/reset', Reset::class)->name('password.reset');
 
 Route::middleware('auth')->group(function () {
     Route::get('/', Welcome::class)->name('dashboard');

@@ -2,8 +2,8 @@
 
 use App\Livewire\Auth\Password\Recovery;
 use App\Models\User;
-use App\Notifications\PasswordRecoveryNotification;
-use Illuminate\Support\Facades\Notification;
+use Illuminate\Auth\Notifications\ResetPassword;
+use Illuminate\Support\Facades\{Notification, Password};
 use Livewire\Livewire;
 
 use function Pest\Laravel\{assertDatabaseCount, assertDatabaseHas, get};
@@ -23,7 +23,7 @@ it('should be able to request for a password recovery sending notification to th
         ->call('startPasswordRecovery')
         ->assertSee('You will receve an email with the password recovery link');
 
-    Notification::assertSentTo($user, PasswordRecoveryNotification::class);
+    Notification::assertSentTo($user, ResetPassword::class);
 });
 
 test('email property', function ($value, $rule) {
