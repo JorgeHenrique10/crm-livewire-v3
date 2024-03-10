@@ -90,3 +90,30 @@ test('checking form roles', function ($field, $value, $rule) {
     'password:confirmed' => ['field' => 'password', 'value' => 'any-password', 'rule' => 'password_confirmed'],
 
 ]);
+
+test('received email is obfuscated', function () {
+    $email = 'jeremias@mailinator.com';
+
+    $obfuscatedEmail = obfuscatedEmail($email);
+    expect($obfuscatedEmail)
+        ->toBe("je******@**********.com");
+
+    Notification::fake();
+
+    $user = User::factory()->create();
+
+    Livewire::test(Recovery::class)
+        ->set('email', $user->email)
+        ->call('startPasswordRecovery');
+
+    Notification::assertSentTo(
+        $user,
+        ResetPassword::class,
+        function (ResetPassword $notification) use ($user) {
+            Livewire::test(Reset::class, ['token' => $notification->token, 'email' => $user->email])
+                ->assertSet('obfuscatedEmail', obfuscatedEmail($user->email));
+
+            return true;
+        }
+    );
+});
